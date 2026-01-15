@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -34,4 +35,28 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out']);
     }
 
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $token = $user->createToken('token')->plainTextToken;
+
+        return response([
+            'user' => $user,
+            'token' => $token
+        ], 201);
+    }
 }
