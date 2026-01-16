@@ -16,6 +16,7 @@ class Member extends Model
         'membership_type', 
         'join_date',
         'dob',
+        'photo',
         'status',
     ];
 }

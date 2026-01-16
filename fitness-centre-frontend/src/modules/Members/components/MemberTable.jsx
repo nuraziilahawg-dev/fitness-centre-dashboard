@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import memberService from '../../../services/member.service';
+import api from './../../../api';
 import MemberActionButton from '../../../components/Elements/Button/MemberActionButton';
 
 export default function MemberTable({ onView, onEdit, onDelete }) {
@@ -22,6 +23,12 @@ export default function MemberTable({ onView, onEdit, onDelete }) {
         } finally {
             setLoading(false);
         }
+    };
+
+    const getPhotoUrl = (path) => {
+        if (!path) return 'https://ui-avatars.com/api/?name=User';
+        const baseUrl = api.defaults.baseURL.replace('/api', '');
+        return `${baseUrl}/storage/${path}`;
     };
 
     {/* Search Bar */ }
@@ -80,8 +87,21 @@ export default function MemberTable({ onView, onEdit, onDelete }) {
                                             {(pagination.current_page - 1) * 10 + (index + 1)}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="text-sm font-semibold text-slate-800">{member.name}</div>
-                                            <div className="text-xs text-slate-500">{member.email}</div>
+                                            <div className="flex items-center gap-3">
+                                                <img
+                                                    src={getPhotoUrl(member.photo)}
+                                                    className="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0"
+                                                    alt="profile"
+                                                />
+                                                <div className="flex flex-col">
+                                                    <div className="text-sm font-semibold text-slate-800 leading-none">
+                                                        {member.name}
+                                                    </div>
+                                                    <div className="text-xs text-slate-500 mt-1">
+                                                        {member.email}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className="px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 text-[10px] font-bold uppercase">
