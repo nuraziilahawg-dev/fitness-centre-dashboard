@@ -31,6 +31,9 @@
 # Clone the repository
 git clone https://github.com/nuraziilahawg-dev/fitness-centre-dashboard
 
+### 1. Backend (Laravel)
+cd fitness-centre-backend
+
 # Install dependencies
 composer install
 
@@ -44,9 +47,9 @@ php artisan db:seed
 php artisan storage:link
 php artisan serve
 
-### 1. Frontend (React)
+### 2. Frontend (React)
 cd fitness-centre-frontend
-Configure the API Base URL Open src/api.js and update the baseURL to match your local Laravel server address:
+Configure the API Base URL. Open src/api.js and update the baseURL to match your local Laravel server address:
 npm install
 npm run dev
 
