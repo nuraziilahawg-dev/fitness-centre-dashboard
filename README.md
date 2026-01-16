@@ -46,6 +46,7 @@ php artisan serve
 
 ### 1. Frontend (React)
 cd fitness-centre-frontend
+Configure the API Base URL Open src/api.js and update the baseURL to match your local Laravel server address:
 npm install
 npm run dev
 
